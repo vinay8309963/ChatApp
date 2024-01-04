@@ -10,11 +10,12 @@ function signup(e) {
     console.log(signupDetails)
     axios.post('http://localhost:3000/user/signup',signupDetails).then(response => {
         if(response.status === 201){
-            document.body.innerHTML += `<div style="color:red;">Signup Successful<div>`
+            window.location.href = "../Login/login.html" // change the page on successful signup
         } else {
             throw new Error('Failed to login')
         }
     }).catch(err => {
+        document.body.innerHTML = `<div style="color:red;">User Already Exists Please Login<div>`;
         document.body.innerHTML += `<div style="color:red;">${err} <div>`;
     })
 }
