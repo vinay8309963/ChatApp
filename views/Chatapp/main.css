@@ -1,86 +1,67 @@
-/* Reset some default styles */
-* {
+/* chat.css */
+
+body,
+html {
+    height: 100%;
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
 }
 
-.chat-container {
-    width: 100%;
-    height: 100vh;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    overflow: hidden;
-}
-
-.chat-box {
+.container {
     display: flex;
     flex-direction: column;
     height: 100%;
 }
 
-.chat-messages {
+h1 {
+    text-align: center;
+}
+
+.messages-container {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end; /* Align messages at the bottom */
-    align-items: flex-start; /* Align messages to the left */
     overflow-y: auto;
-    padding: 10px;
-}
-
-.message {
-    padding: 8px 12px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    max-width: 70%; /* Adjust the maximum width of each message */
-}
-
-.sender {
-    font-weight: bold;
-}
-
-/* Apply alternate background colors */
-.message:nth-child(even) {
-    background-color: #f2f2f2; /* Grey background for even messages */
-}
-
-.message:nth-child(odd) {
-    background-color: #ffffff; /* White background for odd messages */
-}
-
-#message-input-container {
     display: flex;
+    justify-content: center;
     align-items: center;
-    padding: 8px; /* Reduce padding for the input container */
-    border-top: 1px solid #ccc;
-    background-color: #3498db; /* Blue background color */
 }
 
-#message-input {
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table,
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding: 10px;
+    position: sticky;
+    bottom: 0;
+    background-color: #f2f2f2;
+}
+
+input[type="text"] {
     flex: 1;
     padding: 8px;
-    border: none;
-    border-radius: 5px;
-    background-color: #fff; /* White background color for input */
+    margin-right: 10px;
 }
 
-#send-btn {
-    padding: 8px 16px;
-    margin-left: 10px;
+button {
+    padding: 8px 15px;
     border: none;
-    border-radius: 5px;
-    background-color: #333;
+    background-color: #4caf50;
     color: white;
     cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
 }

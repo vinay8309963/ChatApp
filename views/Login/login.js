@@ -7,14 +7,13 @@ function login(e) {
     const loginDetails = {
         email: form.get("email"),
         password: form.get("password")
-
     }
     console.log(loginDetails)
     axios.post('http://localhost:3000/user/login',loginDetails).then(response => {
         if(response.status === 200){
             console.log(response.data.token)
             localStorage.setItem('token', response.data.token);
-            localStorage.setItem('userDetails', JSON.stringify(response.data.user))
+            localStorage.setItem('userName', response.data.userDetails)
             window.location.href = "../Chatapp/index.html" // change the page on successful login
         } else {
             throw new Error('Failed to login')
