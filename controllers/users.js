@@ -46,7 +46,7 @@ const login = (req, res) => {
                     console.log("web token is ")
                     console.log(jwttoken)
                     console.log(user[0].name)
-                    res.status(200).json({token: jwttoken, userDetails: user[0].name, success: true, message: 'Successfully Logged In'})
+                    res.status(200).json({token: jwttoken, userDetails: user[0].name, userId: user[0].id, success: true, message: 'Successfully Logged In'})
                 // Send JWT
                 } else {
                 // response is OutgoingMessage object that server response http request

@@ -14,7 +14,8 @@ function login(e) {
             console.log(response.data.token)
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('userName', response.data.userDetails)
-            window.location.href = "../Chatapp/index.html" // change the page on successful login
+            localStorage.setItem('userId',response.data.userId)
+            window.location.href = "../GroupChat/index.html" // change the page on successful login
         } else {
             throw new Error('Failed to login')
         }

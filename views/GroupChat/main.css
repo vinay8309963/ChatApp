@@ -1,0 +1,468 @@
+/* main.css */
+
+body,
+html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+h1 {
+    text-align: center;
+    /* background-color: #4caf50; Green background color */
+    margin: 0;
+    padding: 10px 0; /* Adjust padding as needed */
+    display: block; /* Make the h1 a block-level element */
+    width: 100%; /* Set the width to fill the entire container */
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    height: 100%;
+}
+
+.icon-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the items horizontally */
+  padding-top: 20px; /* Adjust top padding as needed */
+}
+
+.icon-buttons button {
+  padding: 10px;
+  border: none;
+  background: none;
+  color: black; /* Adjust icon color */
+  cursor: pointer;
+}
+
+
+.navbar {
+    width: 200px;
+    /* background-color: white; */
+    color: white;
+    padding: 15px 10px;
+}
+
+.navbar button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
+}
+
+.navbar button:hover {
+    background-color: #45a049;
+}
+
+/* Styling for the popup */
+/* Styling for the popup */
+.create-group-popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  /* background-color: white; */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  z-index: 1000;
+  max-height: 70%;
+  overflow-y: auto;
+  width: 400px; /* Set width as needed */
+}
+
+.create-group-popup form {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-group-popup #groupName {
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 16px; /* Increase font size */
+}
+
+.create-group-popup .users-list {
+  margin-top: 10px;
+  overflow-y: auto;
+  max-height: 200px;
+  font-size: 14px; /* Limit user list height */
+}
+
+.create-group-popup .create-button {
+  padding: 8px 16px;
+  border: none;
+  background-color: #4caf50;
+  /* color: white; */
+  cursor: pointer;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.create-group-popup .create-button:hover {
+  background-color: #45a049;
+}
+
+.create-group-popup .close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.create-group-popup .close-button i {
+  color: white;
+  font-size: 18px;
+}
+
+.create-group-popup .close-button:hover i {
+  color: red; /* Change color on hover */
+}
+
+
+/* Style for the modal container */
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Style for the modal dialog */
+.modal {
+  /* background-color: white; */
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Shadow effect */
+  width: 70%; /* Adjust width as needed */
+  max-width: 600px; /* Set a maximum width */
+}
+
+/* Style for the modal header */
+.modal-header {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+/* Style for the search input */
+input[type="text"] {
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Style for the close icon button */
+.close-icon {
+  float: right;
+  cursor: pointer;
+  font-size: 18px;
+  color: red;
+}
+
+.close-icon:hover {
+  color: #333;
+}
+
+/* Style for each user row in the modal */
+.user-row {
+  margin-bottom: 10px;
+}
+
+/* Style for the confirm button */
+.confirm-button {
+  padding: 8px 16px;
+  border: none;
+  background-color: #3498db; /* Blue background color */
+  color: #fff; /* White text color */
+  border-radius: 4px;
+  cursor: pointer;
+}
+.confirm-button:hover {
+  background-color: #2980b9; /* Darker blue on hover */
+}
+
+
+
+/*Glow css */
+/* */
+
+
+
+/* glow css ends */
+
+
+
+/* Additional styles based on your design preferences */
+/* You can adjust sizes, colors, and other properties as needed */
+
+/* Style for the form container */
+.form-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: url('https://tse2.mm.bing.net/th?id=OIP.VIAAep8m565Pwp8akz4RgwHaEK&pid=Api&P=0&h=220');
+  /* margin-top: 20px; */
+  /* padding: 10px; */
+  padding-left: 20px;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  margin-left: 20px;
+  /* background-color: #f0f0f0; Change background color as needed */
+}
+
+/* Style for the form labels */
+.form-container label {
+  margin-right: 10px;
+}
+
+/* Style for the text input field */
+.form-container input[type="text"] {
+  padding: 8px;
+  margin-right: 10px;
+  flex-grow: 1;
+  width: 900px;
+  border: 1px solid #ccc; /* Add border styles */
+  border-radius: 5px; /* Add border radius */
+}
+
+/* Style for the emoji button */
+.form-container #emojiButton {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  /* background-color: #f0f0f0; */
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 10px;
+}
+
+/* Style for the emoji button on hover */
+/* .form-container #emojiButton:hover {
+  background-color: #e0e0e0;
+} */
+
+/* Style for the send button */
+.form-container #send {
+  padding: 8px 15px;
+  border: none;
+  background-color: #4caf50;
+  color: red;
+  cursor: pointer;
+  flex-grow: 0;
+  border-radius: 5px; /* Add border radius */
+}
+
+/* Style for the send button on hover */
+.form-container #send:hover {
+  background-color: #45a049;
+}
+
+#groupsContainer {
+  /* Add styles for the groups container */
+  /* For example: */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Style for each group item */
+.group-item {
+  padding: 10px;
+  /* border: 1px solid #333; */
+  border-bottom: 1px solid white;
+  /* background-color: white; Change background color to black */
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Style for the group item names */
+.group-item button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: green; /* Change text color to white */
+}
+
+/* Hover style for the delete button */
+.group-item button:hover {
+  color: red; /* Change color on hover as needed */
+  background-color: transparent; /* Add more styles for hover state */
+}
+
+/* Add these styles in your main CSS file or within a <style> tag */
+
+/* Add these styles in your main CSS file or within a <style> tag */
+
+.delete-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0; /* Remove padding */
+  }
+  
+  .delete-button i {
+    color: red;
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+  }
+
+  /* Define classes for different message alignments */
+
+.chat-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.chat-container h2{
+  color: #45a049;
+}
+
+.messages-container {
+  background: url('https://tse2.mm.bing.net/th?id=OIP.VIAAep8m565Pwp8akz4RgwHaEK&pid=Api&P=0&h=220');
+  flex: 1;
+  overflow-y: auto;
+  width: 100%;
+  max-height: 800px;
+}
+.message {
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    color: #45a049;
+  }
+  
+  .own-message {
+    width: fit-content;
+    text-align: right;
+    margin-left: auto;
+    background-color: #DCF8C6; /* Example background color for user's messages */
+  }
+  
+  .other-message {
+    text-align: left;
+    width: fit-content;
+    background-color: #EAEAEA; /* Example background color for others' messages */
+  }
+
+  /* Style for the users list */
+.users-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  /* Style for each user item */
+  .users-list li {
+    margin-bottom: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    /* background-color: #f0f0f0; */
+  }
+  
+  /* Style for admin users */
+  .users-list li:contains("(Admin)") {
+    font-weight: bold;
+    color: #ff0000; /* Change color as needed */
+  }
+  
+  /* Optional hover effect for user items */
+  .users-list li:hover {
+    background-color: #e0e0e0;
+    cursor: pointer;
+  }
+
+  /* Style for the admin tag */
+.admin-tag {
+    color: #ff0000; /* Set the color for the admin tag text */
+    margin-left: 5px; /* Adjust margin for proper spacing */
+}
+
+/* Style for the admin tag */
+.admin-tag {
+    color: #FFD700; /* Yellow color for the admin tag */
+    font-weight: bold;
+    margin-left: 5px; /* Adjust margin as needed */
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  /* Style for the star icon */
+  .admin-tag::before {
+    content: '\2605'; /* Unicode character for a star icon */
+    margin-right: 3px; /* Adjust spacing between icon and text */
+  }
+
+  /* Add users button */
+.add-users-button {
+  background-color: #3498db;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+/* Define styles for the '.new-users' class */
+.add-new-users {
+  /* Add your desired styles for the button here */
+  background-color: #3498db; /* Example background color */
+  color: white; /* Example text color */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  /* Add more styles as needed */
+}
+
+:root {
+  --primary-color: #333; /* Define primary color */
+  --background-color: #fff; /* Define background color */
+  /* Add more variables as needed */
+}
+
+/* Dark Mode */
+.dark-mode {
+  --primary-color: #f0f0f0;
+  --background-color: #333;
+  /* Override other styles for dark mode */
+}
+
+body {
+  color: var(--primary-color);
+  background-color: var(--background-color);
+  /* Other styles using CSS variables */
+}
+
+
+
+
+  
+
+  
+  
