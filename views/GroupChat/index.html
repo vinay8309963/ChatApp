@@ -29,8 +29,12 @@
             <button id="groupsBtn" onclick="showGroups()">
                 <i class="fas fa-users"></i>
             </button>
-            <button id="toggle-mode"><i id="dark-mode-icon" class="fas fa-moon"></i></button>
-
+            <button id="toggle-mode">
+                <i id="dark-mode-icon" class="fas fa-moon"></i>
+            </button>
+            <button id="edit-font">
+                <i class="fas fa-font fa-lg"></i>
+            </button>
         </div>
         <hr>
         <div class="navbar" id="resizableNavbar">    
@@ -75,6 +79,22 @@
             <i class="fas fa-times"></i>
             </button>
         </div>
+    </div>
+
+    <div>
+        <label for="fontSelector">Select Font Style:</label>
+        <select id="fontSelector" onchange="changeFont()">
+            <option value="Arial, sans-serif">Arial</option>
+            <option value="Georgia, serif">Georgia</option>
+            <option value="Verdana, sans-serif">Verdana</option>
+            <option value="'Courier New', monospace">Courier New</option>
+            <option value="Times New Roman, serif">Times New Roman</option>
+            <option value="Impact, sans-serif">Impact</option>
+            <option value="Trebuchet MS, sans-serif">Trebuchet MS</option>
+            <option value="Palatino Linotype, Book Antiqua, Palatino, serif">Palatino</option>
+            <option value="'Lucida Sans Unicode', 'Lucida Grande', sans-serif">Lucida Sans</option>
+            <option value="'Comic Sans MS', cursive, sans-serif">Comic Sans MS</option>
+        </select>
     </div>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"

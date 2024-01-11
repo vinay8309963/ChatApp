@@ -114,7 +114,7 @@ async function fetchUsers() {
         groupName,
         users: selectedUsers.join(',')
       });
-  
+      displayGroups()
       alert('Group created successfully!');
     } catch (error) {
       console.error('Failed to create group:', error);
