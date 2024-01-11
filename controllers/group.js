@@ -286,5 +286,73 @@ exports.removeUserfromGroup = async (req,res,next) => {
   }
 }
 
+exports.makeUserAdmin = async (req,res,next) => {
+  try {
+    const { groupId, userId } = req.params;
+    console.log('Admin data');
+    console.log(groupId);
+    console.log(userId);
+    // Check if the user and group exist
+    const group = await Group.findByPk(groupId);
+    const user = await User.findByPk(userId);
+
+    if (!group || !user) {
+      return res.status(404).json({ error: 'Group or user not found' });
+    }
+
+    // Update the UserGroup association to make the user an admin
+    const userGroup = await UserGroup.findOne({
+      where: {
+        groupId: groupId,
+        userId: userId,
+      },
+    });
+
+    console.log(userGroup);
+
+    if (userGroup) {
+      userGroup.isAdmin = true;
+      await userGroup.save();
+    }
+
+    res.status(200).json({ message: 'User made as admin successfully' });
+  } catch (error) {
+    console.error('Error making user as admin:', error);
+    res.status(500).json({ error: 'Something went wrong' });
+  }
+}
+
+exports.removeUserAdmin = async (req, res, next) => {
+  try {
+    const { groupId, userId } = req.params;
+
+    // Check if the user and group exist
+    const group = await Group.findByPk(groupId);
+    const user = await User.findByPk(userId);
+
+    if (!group || !user) {
+      return res.status(404).json({ error: 'Group or user not found' });
+    }
+
+    // Update the UserGroup association to remove admin status from the user
+    const userGroup = await UserGroup.findOne({
+      where: {
+        groupId: groupId,
+        userId: userId,
+      },
+    });
+
+    if (userGroup) {
+      userGroup.isAdmin = false;
+      await userGroup.save();
+    }
+
+    res.status(200).json({ message: 'Admin status removed from user successfully' });
+  } catch (error) {
+    console.error('Error making user as admin:', error);
+    res.status(500).json({ error: 'Something went wrong' });
+  }
+};
+
 
 

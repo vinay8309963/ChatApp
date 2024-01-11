@@ -100,7 +100,7 @@ async function fetchUsers() {
 
     const checkboxes = document.querySelectorAll('input[name="selectedUsers"]');
     checkboxes.forEach(checkbox => {
-      console.log(checkbox.value)
+      // console.log(checkbox.value)
       if (checkbox.checked && checkbox.value !== currentUser) {
         selectedUsers.push(checkbox.value);
       }
@@ -153,7 +153,7 @@ async function fetchUsers() {
       const userGroups = response.data;
   
       // Process the userGroups data (e.g., display in the UI)
-      console.log('Groups for user:', userGroups);
+      // console.log('Groups for user:', userGroups);
       return userGroups;
       // Add your logic to display groups for the user in the UI
     } catch (error) {
@@ -196,7 +196,7 @@ async function fetchUsers() {
         groupButton.textContent = group.name;
         groupButton.onclick = function(e) {
             localStorage.setItem('group', new XMLSerializer().serializeToString(e.target));
-            console.log(e.target);
+            // console.log(e.target);
             groupMessages(e.target);
         };
         
@@ -221,7 +221,7 @@ async function fetchUsers() {
 
 //Display GroupMessages and showing users present in the group
 async function groupMessages(group){
-  console.log(group.id)
+  // console.log(group.id)
 
   const groupId = group.id;
   gId = group.id;
@@ -251,24 +251,6 @@ async function groupMessages(group){
     // Append the menu icon to the groupname container
     groupname.appendChild(menuIcon);
 
-//     // Create a wrapper for icons to use flexbox for alignment
-// const iconsWrapper = document.createElement('div');
-// iconsWrapper.style.display = 'flex';
-// iconsWrapper.style.alignItems = 'center'; // Align icons vertically centered
-
-// // Create the users icon
-// const usersIcon = document.createElement('i');
-// usersIcon.classList.add('fas', 'fa-users'); // Font Awesome users icon class
-// usersIcon.style.marginLeft = 'auto'; // Push the icon to the right by using auto margin
-
-// // Create the menu icon
-// const menuIcon = document.createElement('i');
-// menuIcon.classList.add('fas', 'fa-bars', 'menu-icon'); // Font Awesome bars icon class
-
-// // Append icons to the wrapper
-// iconsWrapper.appendChild(usersIcon);
-// iconsWrapper.appendChild(menuIcon);
-
     const messagesContainer = document.getElementById('messages');
     messagesContainer.innerHTML = '';
 
@@ -286,9 +268,7 @@ async function groupMessages(group){
   
       messagesContainer.appendChild(messageElement);
       scrollToBottom();
-    });
-
-    
+    });  
 
    // Function to create and display the users' list
    async function displayUsersList(groupId) {
@@ -313,7 +293,7 @@ async function groupMessages(group){
       const isAdmin = await isCurrentUserAdmin(groupId, userId);
 
       if (isAdmin) {
-        console.log('admin')
+        // console.log('admin')
         const addUsersButton = document.createElement('button');
         addUsersButton.textContent = 'Add Users';
         addUsersButton.classList.add('add-users-button');
@@ -413,9 +393,11 @@ async function groupMessages(group){
               const newUsers = await axios.post(`/groups/${groupId}/add-users`, { userIds: selectedUserIds }, {
                 headers: { 'Authorization': token }
               });
+              displayUsersList(groupId);
             } else {
               // Handle case where no users are selected
-              console.log('No new users selected to add.');
+              alert('No new users selected to add ');
+              // console.log('No new users selected to add.');
               // Optionally display a message or take appropriate action
             }
 
@@ -480,21 +462,127 @@ async function groupMessages(group){
           // Add a click event listener to each user item
           userItem.addEventListener('click', () => {
             // Check if the clicked user is an admin
-            if (user.isAdmin) {
-              alert('You are an admin. Cannot delete yourself from the group.');
-              return; // Prevent admin from deleting themselves
-            }
+            
+            if (!user.isAdmin) {
+              // Create a container div for the box
+              const mainBox = document.createElement('div');
+              mainBox.classList.add('main-box');
 
-            // Ask for confirmation before deletion
-            const confirmation = confirm(`Are you sure you want to delete ${user.name} from the group?`);
+              const boxContainer = document.createElement('div');
+              boxContainer.classList.add('box-options');
+              mainBox.appendChild(boxContainer);
 
-            if (confirmation) {
-              // Logic to delete the user from the group
-              deleteUserFromGroup(user.id);
-            } else {
-              // Handle cancellation
-              alert('Deletion cancelled');
+              // Create a header for the modal
+              const boxHeader = document.createElement('div');
+              boxHeader.classList.add('box-header');
+              boxHeader.textContent = 'Options';
+              boxHeader.style.color = 'green';
+              boxContainer.appendChild(boxHeader);
+              
+              // Create "Remove User" button
+              const removeUserBtn = document.createElement('button');
+              removeUserBtn.classList.add('remove-user')
+              removeUserBtn.textContent = 'Remove User';
+              removeUserBtn.addEventListener('click', (event) => {
+                  event.stopPropagation()
+                  deleteUserFromGroup(user.id)
+                  // displayUsersList(groupId)
+                  // console.log('Remove User button clicked');
+                  // Implement the functionality for removing user here
+              });
+
+              // Create "Make Group Admin" button
+              const makeAdminBtn = document.createElement('button');
+              makeAdminBtn.classList.add('make-admin');
+              makeAdminBtn.textContent = 'Make Group Admin';
+              makeAdminBtn.addEventListener('click', (event) => {
+                  event.stopPropagation()
+                  makeUserAdmin(groupId,user.id)
+                  // displayUsersList(groupId)
+                  // console.log('Make Group Admin button clicked');
+                  // Implement the functionality for making group admin here
+              });
+
+              // Create "Dismiss as Admin" button
+              const dismissAdminBtn = document.createElement('button');
+              dismissAdminBtn.classList.add('remove-admin');
+              dismissAdminBtn.textContent = 'Dismiss as Admin';
+              dismissAdminBtn.addEventListener('click', (event) => {
+                  event.stopPropagation()
+                  removeUserAdmin(groupId,user.id);
+                  // displayUsersList(groupId)
+                  // console.log('Dismiss as Admin button clicked');
+                  // Implement the functionality for dismissing as admin here
+              });
+
+              const cancelBtn = document.createElement('button');
+              cancelBtn.textContent = 'Cancel';
+              cancelBtn.style.marginRight = '5px';
+              cancelBtn.addEventListener('click', (event) => {
+                event.stopPropagation()
+                // console.log('cancel btn is clicked')
+                userItem.removeChild(boxContainer); 
+                // displayUsersList(groupId)// Remove box container from the body
+              });
+
+              // Append buttons to the box container
+              boxContainer.appendChild(removeUserBtn);
+              boxContainer.appendChild(makeAdminBtn);
+              boxContainer.appendChild(dismissAdminBtn);
+              boxContainer.appendChild(cancelBtn);
+
+              // Append the box container to the body
+              userItem.appendChild(boxContainer);
+              
             }
+            else{
+              const boxContainer = document.createElement('div');
+              boxContainer.classList.add('box-options');
+              const cancelBtn = document.createElement('button');
+              cancelBtn.textContent = 'Cancel';
+              cancelBtn.style.marginRight = '5px';
+              cancelBtn.addEventListener('click', (event) => {
+                event.stopPropagation()
+                // console.log('cancel btn is clicked')
+                userItem.remove(boxContainer); 
+                displayUsersList(groupId)// Remove box container from the body
+              });
+              
+              // Create "Remove User" button
+              const removeUserBtn = document.createElement('button');
+              removeUserBtn.classList.add('remove-user')
+              removeUserBtn.textContent = 'Remove User';
+              removeUserBtn.addEventListener('click', (event) => {
+                  stopPropagation();
+                  deleteUserFromGroup(user.id)
+                  // displayUsersList(groupId)
+                  // console.log('Remove User button clicked');
+                  // Implement the functionality for removing user here
+              });
+
+              // Create "Dismiss as Admin" button
+              const dismissAdminBtn = document.createElement('button');
+              dismissAdminBtn.classList.add('remove-admin');
+              dismissAdminBtn.textContent = 'Dismiss as Admin';
+              dismissAdminBtn.addEventListener('click', (event) => {
+                  event.stopPropagation()
+                  removeUserAdmin(groupId,user.id);
+                  // displayUsersList(groupId)
+                  // console.log('Dismiss as Admin button clicked');
+                  // Implement the functionality for dismissing as admin here
+              });
+
+              // Append buttons to the box container
+              boxContainer.appendChild(cancelBtn);
+              boxContainer.appendChild(removeUserBtn);
+              boxContainer.appendChild(dismissAdminBtn);
+
+              // Append the box container to the body
+              userItem.appendChild(boxContainer);
+
+            }
+            
+
           });
 
           // Function to delete the user from the group
@@ -513,7 +601,8 @@ async function groupMessages(group){
 
               // Handle success or error messages
               if (response.ok) {
-                console.log(data.message);
+                displayUsersList(groupId);
+                // console.log(data.message);
                 // Perform actions after successful deletion (update UI, etc.)
               } else {
                 console.error(data.error);
@@ -525,11 +614,59 @@ async function groupMessages(group){
             }
           };
 
+          const makeUserAdmin = async (groupId,userId) => {
+            try {
+              const response = await fetch(`/groups/${groupId}/users/${userId}/make-admin`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  // Add other necessary headers (e.g., authorization headers if needed)
+                },
+                // Add necessary headers or authentication tokens if required
+              });
+              
+              if (response.ok) {
+                displayUsersList(groupId);
+                alert('User made as admin successfully');
+                // Perform necessary UI updates after successful action
+              } else {
+                throw new Error('Failed to make user as admin');
+              }
+            } catch (error) {
+              console.error('Error making user as admin:', error);
+              // Handle error scenarios or display error messages
+            }
+          }
+
+          const removeUserAdmin = async (groupId,userId) => {
+            try {
+              const response = await fetch(`/groups/${groupId}/users/${userId}/remove-admin`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  // Add other necessary headers (e.g., authorization headers if needed)
+                },
+                // Add necessary headers or authentication tokens if required
+              });
+          
+              if (response.ok) {
+                displayUsersList(groupId);
+                alert('Admin status removed from user successfully');
+                // Perform necessary UI updates after successful action
+              } else {
+                throw new Error('Failed to remove admin status from user');
+              }
+              
+            } catch (error) {
+              console.error('Error removing admin status from user:', error);
+              // Handle error scenarios or display error messages
+            }
+          }
+
+
           usersList.appendChild(userItem);
         });
       };
-  
-      console.log(groupUsers.data);
       renderUsers(groupUsers.data);
   
     } catch (error) {
@@ -540,11 +677,7 @@ async function groupMessages(group){
   // Logic to check if currentUser is an admin for the group
   async function isCurrentUserAdmin(groupId, userId) {
     try {
-      console.log('Hi')
       const response = await axios.get(`/groups/${groupId}/users/${userId}`); // Replace with your endpoint
-      console.log('hi')
-      console.log(response);
-      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error('Error checking admin status:', error);
@@ -650,12 +783,12 @@ async function sendMessage(event) {
     const parser = new DOMParser();
     const group = parser.parseFromString(storedGroup, 'text/html').body.firstChild;
     
-    console.log(group);
+    // console.log(group);
     await groupMessages(group);
     scrollToBottom();
-    // setInterval(() => {
-    //   groupMessages(group);
-    // },1000);
+    setInterval(() => {
+      groupMessages(group);
+    },1000);
     
   } catch (error) {
     console.error('Failed to send message:', error);
@@ -693,19 +826,10 @@ async function getUsers() {
 
     document.getElementById('username').innerHTML = `<strong>Hi, ${response.data.you}</strong>.<br> Welcome To Group Chat`;
     
-    // response.data.users.forEach(user => {
-    //   const parentElement = document.getElementById('messages');
-    //   const newRow = document.createElement('tr');
-    //   newRow.setAttribute('id', `user-${user.id}`);
-      
-    //   if (response.data.you === user.name) {
-    //     newRow.innerHTML = `<td>You joined</td>`;
-    //   } else {
-    //     newRow.innerHTML = `<td>${user.name} joined</td>`;
-    //   }
-      
-    //   parentElement.appendChild(newRow);
-    // });
+    
+    const parentElement = document.getElementById('messages-container');
+    parentElement.style.backgroundSize = 'cover';
+    parentElement.style.backgroundPosition = 'center';    
 
     return 1; // Resolve the promise with 1 for success
   } catch (error) {
@@ -728,6 +852,7 @@ async function initChat() {
     console.error('Failed to initialize chat:', error);
   }
 }
+
 
 
 

@@ -68,7 +68,8 @@ h1 {
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 20px;
-  /* background-color: white; */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Semi-transparent black background */
+  background-color: rgba(0, 0, 0, 0.5);
   border: 1px solid #ccc;
   border-radius: 5px;
   z-index: 1000;
@@ -199,7 +200,63 @@ input[type="text"] {
 }
 
 
+.main-box{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+.box-options {
+  /* background-color: white; */
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Shadow effect */
+  width: 70%; /* Adjust width as needed */
+  max-width: 600px; /* Set a maximum width */
+}
+
+/* Style for the modal header */
+.box-header {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.remove-user{
+  padding: 8px 16px;
+  border: none;
+  background-color: #3498db; /* Blue background color */
+  color: #fff; /* White text color */
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 2px;
+}
+
+.make-admin{
+  padding: 8px 16px;
+  border: none;
+  background-color: #3498db; /* Blue background color */
+  color: #fff; /* White text color */
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 2px;
+}
+
+.remove-admin{
+  padding: 8px 16px;
+  border: none;
+  background-color: #3498db; /* Blue background color */
+  color: #fff; /* White text color */
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 2px;
+}
 /*Glow css */
 /* */
 
@@ -217,7 +274,7 @@ input[type="text"] {
   display: flex;
   flex-direction: row;
   align-items: center;
-  background: url('https://tse2.mm.bing.net/th?id=OIP.VIAAep8m565Pwp8akz4RgwHaEK&pid=Api&P=0&h=220');
+  /* background: url('https://tse2.mm.bing.net/th?id=OIP.VIAAep8m565Pwp8akz4RgwHaEK&pid=Api&P=0&h=220'); */
   /* margin-top: 20px; */
   /* padding: 10px; */
   padding-left: 20px;
@@ -289,6 +346,7 @@ input[type="text"] {
 /* Style for each group item */
 .group-item {
   padding: 10px;
+  padding-bottom: 0px;
   /* border: 1px solid #333; */
   border-bottom: 1px solid white;
   /* background-color: white; Change background color to black */
@@ -303,6 +361,8 @@ input[type="text"] {
   background: none;
   border: none;
   cursor: pointer;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: medium;
   color: green; /* Change text color to white */
 }
 
@@ -345,7 +405,7 @@ input[type="text"] {
 }
 
 .messages-container {
-  background: url('https://tse2.mm.bing.net/th?id=OIP.VIAAep8m565Pwp8akz4RgwHaEK&pid=Api&P=0&h=220');
+  /* background: url('https://tse2.mm.bing.net/th?id=OIP.VIAAep8m565Pwp8akz4RgwHaEK&pid=Api&P=0&h=220'); */
   flex: 1;
   overflow-y: auto;
   width: 100%;
@@ -450,12 +510,19 @@ input[type="text"] {
 .dark-mode {
   --primary-color: #f0f0f0;
   --background-color: #333;
+  --background: url('../Backgrounds/dark-mode.jpg');
   /* Override other styles for dark mode */
+}
+
+.light-mode {
+  --background: url('../Backgrounds/light-mode.jpg');
 }
 
 body {
   color: var(--primary-color);
   background-color: var(--background-color);
+  background: var(--background); 
+  transition: background 0.3s ease-in-out
   /* Other styles using CSS variables */
 }
 

@@ -11,5 +11,7 @@ router.get('/:groupId/users', groupController.getUsersInGroups);
 router.get('/:groupId/users/:userId', groupController.isCurrentUserAdmin);
 router.post('/:groupId/add-users', groupController.addNewsUserToGroup);
 router.delete('/:groupId/remove-user/:userId', groupController.removeUserfromGroup);
+router.post('/:groupId/users/:userId/make-admin', groupController.makeUserAdmin);
+router.post('/:groupId/users/:userId/remove-admin', groupController.removeUserAdmin);
 
 module.exports = router;

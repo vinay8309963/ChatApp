@@ -9,6 +9,13 @@
     <link href="https://cdn.jsdelivr.net/npm/emoji-mart/css/emoji-mart.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/emoji-mart/dist/umd/emoji-mart.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Add some styles for the resizable navbar */
+        .resizable {
+            resize: horizontal;
+            overflow: hidden;
+        }
+    </style>
 
 </head>
 
@@ -24,12 +31,13 @@
             <button id="toggle-mode"><i id="dark-mode-icon" class="fas fa-moon"></i></button>
 
         </div>
-        <div class="navbar">    
+        <hr>
+        <div class="navbar" id="resizableNavbar">    
             <div class="groups-container" id="groupsContainer" style="display: none;">
                 <!-- Display groups here -->
             </div>
         </div>
-    
+        <hr>
         <div class="chat-container">
             <h1>Chat App</h1>
 
@@ -77,6 +85,7 @@
 
             toggleButton.addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
+            document.body.classList.toggle('light-mode');
             // Save user preference in local storage
             if (document.body.classList.contains('dark-mode')) {
                 localStorage.setItem('mode', 'dark');
@@ -90,6 +99,28 @@
             if (userMode === 'dark') {
             document.body.classList.add('dark-mode');
             }
+            else{
+                document.body.classList.add('light-mode');
+            }
+
+            let isResizing = false;
+        const resizableNavbar = document.getElementById('resizableNavbar');
+
+        resizableNavbar.addEventListener('mousedown', (event) => {
+            isResizing = true;
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseup', () => {
+                isResizing = false;
+                document.removeEventListener('mousemove', handleMouseMove);
+            });
+        });
+
+        function handleMouseMove(event) {
+            if (isResizing) {
+                const newWidth = event.clientX;
+                resizableNavbar.style.width = newWidth + 'px';
+            }
+        }
 
     </script>
     
