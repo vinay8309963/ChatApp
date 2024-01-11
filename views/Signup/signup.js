@@ -8,7 +8,7 @@ function signup(e) {
         phoneNumber: form.get("phoneNumber")
     }
     console.log(signupDetails)
-    axios.post('http://localhost:3000/user/signup',signupDetails).then(response => {
+    axios.post('/user/signup',signupDetails).then(response => {
         if(response.status === 201){
             window.location.href = "../Login/login.html" // change the page on successful signup
         } else {

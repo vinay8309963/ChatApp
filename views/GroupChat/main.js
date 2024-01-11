@@ -768,7 +768,7 @@ async function sendMessage(event) {
   const messageText = messageInput.value;
   
   try {
-    await axios.post('http://localhost:3000/chat/sendMessage', {
+    await axios.post('/chat/sendMessage', {
       message: messageText,
       gId : gId
     }, {
@@ -797,7 +797,7 @@ async function sendMessage(event) {
 
 async function displayMessages() {
   try {
-    const response = await axios.get('http://localhost:3000/chat/getMessages', {
+    const response = await axios.get('/chat/getMessages', {
       headers: { 'Authorization': token }
     });
 
@@ -820,7 +820,7 @@ async function displayMessages() {
 
 async function getUsers() {
   try {
-    const response = await axios.get('http://localhost:3000/chat/getUsers', {
+    const response = await axios.get('/chat/getUsers', {
       headers: { 'Authorization': token }
     });
 
