@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../util/database');
 
-const Messages = sequelize.define('messages', {
+const Archieves = sequelize.define('archieves', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -16,4 +16,4 @@ const Messages = sequelize.define('messages', {
     type : Sequelize.STRING
 })
 
-module.exports = Messages;
+module.exports = Archieves;

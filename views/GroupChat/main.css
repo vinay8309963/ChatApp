@@ -31,6 +31,7 @@ h1 {
 .icon-buttons button {
   border-radius: 50%;
   padding: 10px;
+  margin-bottom: 5px;
   border: none;
   color: black; /* Adjust icon color */
   cursor: pointer;
@@ -222,18 +223,12 @@ input[type="text"] {
 
 .box-options {
   /* background-color: white; */
-  padding: 30px;
+  /* padding: 30px; */
   border-radius: 8px;
+  padding: 0%;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Shadow effect */
   width: 70%; /* Adjust width as needed */
   max-width: 600px; /* Set a maximum width */
-}
-
-/* Style for the modal header */
-.box-header {
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 10px;
 }
 
 .remove-user{
@@ -264,6 +259,10 @@ input[type="text"] {
   border-radius: 4px;
   cursor: pointer;
   margin-right: 2px;
+}
+
+.cancel-button{
+  padding: 0%;
 }
 /*Glow css */
 /* */
@@ -353,8 +352,7 @@ input[type="text"] {
 
 /* Style for each group item */
 .group-item {
-  padding: 10px;
-  padding-bottom: 0px;
+  
   /* border: 1px solid #333; */
   border-bottom: 1px solid white;
   /* background-color: white; Change background color to black */
@@ -369,6 +367,7 @@ input[type="text"] {
   background: none;
   border: none;
   cursor: pointer;
+  text-align: left;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-size: medium;
   color: green; /* Change text color to white */
@@ -385,10 +384,12 @@ input[type="text"] {
 /* Add these styles in your main CSS file or within a <style> tag */
 
 .delete-button {
+    text-align: right;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0; /* Remove padding */
+    padding: 0%;
+    float: right; /* Remove padding */
   }
   
   .delete-button i {
@@ -419,25 +420,79 @@ input[type="text"] {
   width: 100%;
   max-height: 800px;
 }
+
 .message {
-    padding: 5px;
-    margin-bottom: 5px;
-    border-radius: 5px;
-    color: #45a049;
-  }
-  
-  .own-message {
-    width: fit-content;
-    text-align: right;
-    margin-left: auto;
-    background-color: #DCF8C6; /* Example background color for user's messages */
-  }
-  
-  .other-message {
-    text-align: left;
-    width: fit-content;
-    background-color: #EAEAEA; /* Example background color for others' messages */
-  }
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  color: #000;
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
+.own-message {
+  width: fit-content;
+  text-align: right;
+  margin-left: auto;
+  background-color: #DCF8C6;
+}
+
+.other-message {
+  text-align: left;
+  width: fit-content;
+  background-color: #EAEAEA;
+}
+
+.message-text {
+  margin-top: 5px;
+}
+
+.message-sender {
+  font-size: 12px;
+  color: #999;
+}
+
+.media-container {
+  display: inline-block;
+  max-width: 100%;
+}
+
+.media-file {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-top: 8px;
+}
+
+.file-link {
+  color: #075E54;
+  text-decoration: none;
+}
+
+.file-link:hover {
+  text-decoration: underline;
+}
+
+.modal-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+}
 
   /* Style for the users list */
 .users-list {
@@ -533,6 +588,21 @@ body {
   transition: background 0.3s ease-in-out
   /* Other styles using CSS variables */
 }
+
+.attachment-button {
+  /* background-color: #4CAF50; Green background color */
+  border: none; /* No border */
+  /* color: white; White text color */
+  /* padding: 10px 20px; Padding */
+  text-align: center; /* Center text */
+  text-decoration: none; /* No underline */
+  display: inline-block; /* Display as inline-block to fit content */
+  font-size: 16px; /* Font size */
+  cursor: pointer; /* Cursor pointer on hover */
+  border-radius: 5px; /* Rounded corners */
+}
+
+
 
 
 

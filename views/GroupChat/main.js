@@ -186,7 +186,7 @@ async function fetchUsers() {
       
       const groupsList = document.createElement('ul');
       groupsList.classList.add('groups-list');
-
+    
       groups.forEach(group => {
         const groupItem = document.createElement('div');
         groupItem.classList.add('group-item'); // Add a class for styling
@@ -234,10 +234,7 @@ async function groupMessages(group){
     })
 
     const groupname = document.getElementById('username');
-    groupname.textContent = group.textContent;
-    
-    displayingJoinedMessage();
-    
+    groupname.textContent = group.textContent;    
     // Add users icon beside the group name
     const usersIcon = document.createElement('i');
     usersIcon.classList.add('fas', 'fa-users'); // Font Awesome users icon class
@@ -251,22 +248,26 @@ async function groupMessages(group){
     // Append the menu icon to the groupname container
     groupname.appendChild(menuIcon);
 
+    displayingJoinedMessage();
+    
     const messagesContainer = document.getElementById('messages');
     messagesContainer.innerHTML = '';
 
+    console.log(groupDetails);
     groupDetails.data.messages.forEach(message => {
-      const messageElement = document.createElement('div');
-      messageElement.classList.add('message');
+      // const messageElement = document.createElement('div');
+      // messageElement.classList.add('message');
   
-      if (message.name === userName) {
-        messageElement.classList.add('own-message');
-        messageElement.textContent = `${message.message}`;
-      } else {
-        messageElement.classList.add('other-message');
-        messageElement.textContent = `${message.name}: ${message.message}`;
-      }
-  
-      messagesContainer.appendChild(messageElement);
+      // if (message.name === userName) {
+      //   messageElement.classList.add('own-message');
+      //   messageElement.textContent = `${message.message}`;
+      // } else {
+      //   messageElement.classList.add('other-message');
+      //   messageElement.textContent = `${message.name}: ${message.message}`;
+      // }
+
+      // messagesContainer.appendChild(messageElement);
+      addNewMessage(message);
       scrollToBottom();
     });  
 
@@ -459,7 +460,8 @@ async function groupMessages(group){
             userItem.appendChild(adminTag);
           }
 
-          // Add a click event listener to each user item
+          if(isAdmin){
+            // Add a click event listener to each user item
           userItem.addEventListener('click', () => {
             // Check if the clicked user is an admin
             
@@ -471,13 +473,6 @@ async function groupMessages(group){
               const boxContainer = document.createElement('div');
               boxContainer.classList.add('box-options');
               mainBox.appendChild(boxContainer);
-
-              // Create a header for the modal
-              const boxHeader = document.createElement('div');
-              boxHeader.classList.add('box-header');
-              boxHeader.textContent = 'Options';
-              boxHeader.style.color = 'green';
-              boxContainer.appendChild(boxHeader);
               
               // Create "Remove User" button
               const removeUserBtn = document.createElement('button');
@@ -503,21 +498,9 @@ async function groupMessages(group){
                   // Implement the functionality for making group admin here
               });
 
-              // Create "Dismiss as Admin" button
-              const dismissAdminBtn = document.createElement('button');
-              dismissAdminBtn.classList.add('remove-admin');
-              dismissAdminBtn.textContent = 'Dismiss as Admin';
-              dismissAdminBtn.addEventListener('click', (event) => {
-                  event.stopPropagation()
-                  removeUserAdmin(groupId,user.id);
-                  // displayUsersList(groupId)
-                  // console.log('Dismiss as Admin button clicked');
-                  // Implement the functionality for dismissing as admin here
-              });
-
               const cancelBtn = document.createElement('button');
               cancelBtn.textContent = 'Cancel';
-              cancelBtn.style.marginRight = '5px';
+              cancelBtn.classList.add('cancel-button');
               cancelBtn.addEventListener('click', (event) => {
                 event.stopPropagation()
                 // console.log('cancel btn is clicked')
@@ -528,7 +511,6 @@ async function groupMessages(group){
               // Append buttons to the box container
               boxContainer.appendChild(removeUserBtn);
               boxContainer.appendChild(makeAdminBtn);
-              boxContainer.appendChild(dismissAdminBtn);
               boxContainer.appendChild(cancelBtn);
 
               // Append the box container to the body
@@ -538,15 +520,6 @@ async function groupMessages(group){
             else{
               const boxContainer = document.createElement('div');
               boxContainer.classList.add('box-options');
-              const cancelBtn = document.createElement('button');
-              cancelBtn.textContent = 'Cancel';
-              cancelBtn.style.marginRight = '5px';
-              cancelBtn.addEventListener('click', (event) => {
-                event.stopPropagation()
-                // console.log('cancel btn is clicked')
-                userItem.remove(boxContainer); 
-                displayUsersList(groupId)// Remove box container from the body
-              });
               
               // Create "Remove User" button
               const removeUserBtn = document.createElement('button');
@@ -572,18 +545,30 @@ async function groupMessages(group){
                   // Implement the functionality for dismissing as admin here
               });
 
+              const cancelBtn = document.createElement('button');
+              cancelBtn.textContent = 'Cancel';
+              cancelBtn.classList.add('cancel-button');
+              cancelBtn.addEventListener('click', (event) => {
+                event.stopPropagation()
+                // console.log('cancel btn is clicked')
+                userItem.remove(boxContainer); 
+                displayUsersList(groupId)// Remove box container from the body
+              });
+
               // Append buttons to the box container
-              boxContainer.appendChild(cancelBtn);
               boxContainer.appendChild(removeUserBtn);
               boxContainer.appendChild(dismissAdminBtn);
+              boxContainer.appendChild(cancelBtn);
 
               // Append the box container to the body
               userItem.appendChild(boxContainer);
 
-            }
-            
-
+            }  
           });
+          }
+          else{
+          console.log('not admin');
+          }
 
           // Function to delete the user from the group
           const deleteUserFromGroup = async (userId) => {
@@ -701,6 +686,95 @@ async function groupMessages(group){
   }
 }
 
+
+function addNewMessage(msg) {
+  const parentElement = document.getElementById('messages');
+  const newRow = document.createElement('div');
+  newRow.classList.add('message');
+
+  if (msg.type == "msg") {
+    if (msg.name == userName) {
+      newRow.classList.add('own-message');
+      newRow.innerHTML = `<div class="message-text">${msg.message}</div>`;
+    } else {
+      newRow.classList.add('other-message');
+      newRow.innerHTML = `<div class="message-sender">${msg.name}</div><div class="message-text">${msg.message}</div>`;
+    }
+  } else if (msg.type.includes("image")) {
+    if (msg.name == userName) {
+      newRow.classList.add('own-message');
+      newRow.innerHTML = `<div class="media-container"><img class="media-file" src="${msg.message}" alt="" onclick="openMedia('${msg.message}')"></div>`;
+    } else {
+      newRow.classList.add('other-message');
+      newRow.innerHTML = `<div class="message-sender">${msg.name}</div><div class="media-container"><img class="media-file" src="${msg.message}" alt="" onclick="openMedia('${msg.message}')"></div>`;
+    }
+  } else if (msg.type.includes("video")) {
+    if (msg.name == userName) {
+      newRow.classList.add('own-message');
+      newRow.innerHTML = `<div class="media-container"><video class="media-file" controls onclick="openMedia('${msg.message}')">
+          <source src="${msg.message}" type="video/mp4">
+          Your browser does not support the video tag.
+      </video></div>`;
+    } else {
+      newRow.classList.add('other-message');
+      newRow.innerHTML = `<div class="message-sender">${msg.name}</div><div class="media-container"><video class="media-file" controls onclick="openMedia('${msg.message}')">
+          <source src="${msg.message}" type="video/mp4">
+          Your browser does not support the video tag.
+      </video></div>`;
+    }
+  } else if (msg.type.includes("application/pdf")) {
+    if (msg.name == userName) {
+      newRow.classList.add('own-message');
+      newRow.innerHTML = `<div class="media-container"><iframe class="media-file" src="${msg.message}" width="200" height="200"></iframe></div>`;
+    } else {
+      newRow.classList.add('other-message');
+      newRow.innerHTML = `<div class="message-sender">${msg.name}</div><div class="media-container"><iframe class="media-file" src="${msg.message}" width="200" height="200"></iframe></div>`;
+    }
+  } else {
+    if (msg.name == userName) {
+      newRow.classList.add('own-message');
+      newRow.innerHTML = `<a class="file-link" href="${msg.message}" download>Download</a>`;
+    } else {
+      newRow.classList.add('other-message');
+      newRow.innerHTML = `<div class="message-sender">${msg.name}</div><a class="file-link" href="${msg.message}" download>Download</a>`;
+    }
+  }
+
+  parentElement.appendChild(newRow);
+}
+
+function openMedia(src) {
+  const modalContainer = document.createElement('div');
+  modalContainer.classList.add('modal-container');
+
+  const closeButton = document.createElement('span');
+  closeButton.classList.add('close-button');
+  closeButton.innerHTML = '&times;';
+  closeButton.onclick = function () {
+    document.body.removeChild(modalContainer);
+  };
+
+  const mediaElement = document.createElement('div');
+  mediaElement.classList.add('media-container');
+
+  const mediaFile = src.includes('.mp4') ? 
+    `<video class="media-file" controls>
+       <source src="${src}" type="video/mp4">
+       Your browser does not support the video tag.
+     </video>` :
+    `<img class="media-file" src="${src}" alt="">`;
+
+  mediaElement.innerHTML = mediaFile;
+
+  modalContainer.appendChild(closeButton);
+  modalContainer.appendChild(mediaElement);
+
+  document.body.appendChild(modalContainer);
+}
+
+
+
+
 async function displayingJoinedMessage(){
 
   const storedGroup = localStorage.getItem('group');
@@ -766,13 +840,21 @@ async function sendMessage(event) {
   event.preventDefault();
   const messageInput = document.getElementById('message');
   const messageText = messageInput.value;
-  
+  const fileInput = document.getElementById('fileInput');
+  const fileData = fileInput.files[0];
+
+  const formData = new FormData();
+  formData.append('file', fileData);
+  formData.append('message', messageText);
+  formData.append('groupId', gId);
+
   try {
-    await axios.post('/chat/sendMessage', {
-      message: messageText,
-      gId : gId
-    }, {
-      headers: { 'Authorization': token }
+    console.log(formData.get('file'))
+    await axios.post('/chat/sendMessage', formData, {
+      headers: { 
+        'Authorization': token,
+        // 'Content-Type': 'multipart/form-data'
+      }
     });
 
     messageInput.value = '';
@@ -786,14 +868,75 @@ async function sendMessage(event) {
     // console.log(group);
     await groupMessages(group);
     scrollToBottom();
-    setInterval(() => {
-      groupMessages(group);
-    },1000);
+    // setInterval(() => {
+    //   groupMessages(group);
+    // },1000);
     
   } catch (error) {
     console.error('Failed to send message:', error);
   }
 }
+
+// function addNewMessage(msg) {
+//   const parentElement = document.getElementById('messages');
+//   const newRow = document.createElement('tr');
+
+//   if (msg.type == "msg") {
+
+//       if (msg.name == username) {
+//           newRow.setAttribute('id', message-${msg.id})
+//           newRow.setAttribute('class', yourmsg)
+//           newRow.innerHTML = <td>You : ${msg.message}</td>;
+//       } else {
+//           newRow.setAttribute('id', message-${msg.id})
+//           newRow.innerHTML = <td>${msg.name} : ${msg.message}</td>;
+//       }
+//   } else if (msg.type.includes("image")) {
+//       if (msg.name == username) {
+//           newRow.setAttribute('id', message-${msg.id})
+//           newRow.setAttribute('class', yourmsg)
+//           newRow.innerHTML = <td>You :   <img src="${msg.message}" alt=""> </td>;
+//       } else {
+//           newRow.setAttribute('id', message-${msg.id})
+//           newRow.innerHTML = <td>${msg.name} : <img src="${msg.message}"  alt=""></td>;
+//       }
+//   } else if (msg.type.includes("video")) {
+//       if (msg.name == username) {
+//           newRow.setAttribute('id', message-${msg.id})
+//           newRow.setAttribute('class', yourmsg)
+//           newRow.innerHTML = `<td>You :   <video controls>
+//           <source src="${msg.message}" type="video/mp4">
+//           Your browser does not support the video tag.
+//       </video> </td>`;
+//       } else {
+//           newRow.setAttribute('id', message-${msg.id})
+//           newRow.innerHTML = `<td>${msg.name} : <video controls>
+//           <source src="${msg.message}" type="video/mp4">
+//           Your browser does not support the video tag.
+//       </video></td>`;
+//       }
+//   } else if (msg.type.includes("application/pdf")) {
+//       if (msg.name == username) {
+//           newRow.setAttribute('id', message-${msg.id})
+//           newRow.setAttribute('class', yourmsg)
+//           newRow.innerHTML = <td>You:  <iframe src="${msg.message}" width="600" height="400"></iframe> </td>;
+//       } else {
+//           newRow.setAttribute('id', message-${msg.id})
+//           newRow.innerHTML = <td>${msg.name} : <iframe src="${msg.message}" width="600" height="400"></iframe></td>;
+//       }
+//   } else {
+//       if (msg.name == username) {
+//           newRow.setAttribute('id', message-${msg.id})
+//           newRow.setAttribute('class', yourmsg)
+//           newRow.innerHTML = <td>You:  <a href="${msg.message}" download>Download</a> </td>;
+//       } else {
+//           newRow.setAttribute('id', message-${msg.id})
+//           newRow.innerHTML = <td>${msg.name} : <a href="${msg.message}" download>Download</a></td>;
+//       }
+//   }
+
+//   parentElement.appendChild(newRow);
+// }
 
 async function displayMessages() {
   try {
